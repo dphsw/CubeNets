@@ -23,5 +23,30 @@ namespace CubeNetsLibrary
             return datafiles.Any(df => df.Name == name);
         }
 
+        public List<Tree> GetTrees(int nodes)
+        {
+            List<Tree> trees = new List<Tree>();
+
+            string name = $"{nodes:D2}.txt";
+            FileInfo file = datafiles.Find(df => df.Name == name);
+            if (file == null) return trees;
+
+            string line;
+            string[] nums;
+            List<int> ints = new List<int>();
+            using (TextReader tr = new StreamReader(file.FullName))
+            {
+                while ((line = tr.ReadLine()) != null)
+                {
+                    nums = line.Split(' ');
+                    ints.Clear();
+                    foreach (string s in nums) if (int.TryParse(s, out int i)) ints.Add(i);
+                    if (ints.Count == nodes) trees.Add(new Tree());
+                }
+            }
+
+            return trees;
+        }
+
     }
 }
