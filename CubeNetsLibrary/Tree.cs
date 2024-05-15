@@ -9,6 +9,12 @@ namespace CubeNetsLibrary
         readonly int numNodes;
         readonly int[] parentNodes;
 
+        int[] edgeBitMasks = null;
+        public int[] EdgeBitMasks { get {
+                if (edgeBitMasks == null) CreateEdgeBitmasks();
+                return edgeBitMasks; 
+            } }
+
         public Tree(List<int> parentNodes)
         {
             numNodes = parentNodes.Count;
@@ -20,6 +26,10 @@ namespace CubeNetsLibrary
         {
             if (parentNodes.Length != numNodes) throw new Exception("Tree has wrong number of parent nodes");
             for (int n = 0; n < numNodes; n++) if (parentNodes[n] >= n) throw new Exception($"Tree node {n} has parent {parentNodes[n]}; It must have a parent that has already been created.");
+        }
+
+        private void CreateEdgeBitmasks() { 
+            edgeBitMasks = new int[numNodes - 1];
         }
     }
 }
