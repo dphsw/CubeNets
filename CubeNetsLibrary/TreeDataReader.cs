@@ -41,7 +41,7 @@ namespace CubeNetsLibrary
                     nums = line.Split(' ');
                     ints.Clear();
                     foreach (string s in nums) if (int.TryParse(s, out int i)) ints.Add(i);
-                    if (ints.Count == nodes) trees.Add(new Tree());
+                    if (ints.Count == nodes) trees.Add(new Tree(ints));
                 }
             }
 
