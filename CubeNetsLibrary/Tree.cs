@@ -30,6 +30,10 @@ namespace CubeNetsLibrary
 
         private void CreateEdgeBitmasks() { 
             edgeBitMasks = new int[numNodes - 1];
+            for (int n = 1; n < numNodes; n++)
+            {
+                edgeBitMasks[n - 1] = (1 << n) | (1 << parentNodes[n]);
+            }
         }
     }
 }

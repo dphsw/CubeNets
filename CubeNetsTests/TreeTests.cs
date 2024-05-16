@@ -17,7 +17,7 @@ namespace CubeNetsTests
         public void FindEdgeBitmasks()
         {
             Tree linear = new Tree([0, 1, 2, 3]);
-            Tree star = new Tree([0, 0, 0, 0]);
+            Tree star = new Tree([0, 1, 1, 1]);
 
             int[] linearEdges = linear.EdgeBitMasks;
             int[] starEdges = star.EdgeBitMasks;
