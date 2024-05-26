@@ -52,6 +52,63 @@ namespace CubeNetsLibrary
         private void GeneratePairSets()
         {
             pairSets = new List<int[]>();
+
+            if (numPairs * 2 > numPositions) return; // Wouldn't be possible to have any sets of pairs
+
+            int[] pairs = new int[numPairs];
+            int[] loop = new int[numPairs];
+            int[] cumulativeBitmask = new int[numPairs];
+            int depth = 0;
+            int firstLoopEnd = firstPairExcluded ? (numPositions - 2) : (numPositions - 1);
+            int bitsUsed, bits, temp;
+            bool endOfLoop;
+
+            while (loop[0] <= firstLoopEnd)
+            {
+                endOfLoop = loop[depth] >= possiblePairs;
+                
+                if (!endOfLoop) {
+                    bitsUsed = (depth == 0) ? 0 : cumulativeBitmask[depth - 1];
+                    temp = loop[depth];
+                    do
+                    {
+                        bits = pairBitmasks[temp];
+                        temp++;
+                    } while ((bits & bitsUsed) != 0 && temp < possiblePairs);
+
+                    endOfLoop = (bits & bitsUsed) != 0;
+                    
+                    if (!endOfLoop)
+                    {
+                        loop[depth] = temp - 1;
+                        pairs[depth] = bits;
+                        cumulativeBitmask[depth] = bits | bitsUsed;
+
+                        if (depth < numPairs - 1)
+                        {
+                            depth++;
+                            loop[depth] = loop[depth - 1] + 1;
+                        }
+                        else
+                        {
+                            int[] clone = new int[numPairs];
+                            for (temp = 0; temp < numPairs; temp++) clone[temp] = pairs[temp];
+                            pairSets.Add(clone);
+
+                            loop[depth]++;
+                        }
+
+                    }
+                }
+
+                if(endOfLoop)
+                {
+                    depth--;
+                    loop[depth]++;
+                }
+
+            }
+
         }
     }
 }
