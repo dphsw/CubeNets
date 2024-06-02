@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace CubeNetsLibrary
 {
@@ -46,6 +47,8 @@ namespace CubeNetsLibrary
 
         public List<int[]> GetPairSets() {
             if (pairSets == null) GeneratePairSets();
+            List<int[]> clone = new List<int[]>();
+            clone.AddRange(pairSets);
             return pairSets;
         }
 
@@ -109,6 +112,19 @@ namespace CubeNetsLibrary
 
             }
 
+        }
+
+        public List<int[]> GetPairSetsForTree(Tree tree)
+        {
+            List<int[]> pairs = GetPairSets();
+            int[] edges = tree.EdgeBitMasks;
+
+            for(int p = pairs.Count - 1; p >= 0; p--)
+            {
+                if (pairs[p].Intersect(edges).Any()) pairs.RemoveAt(p);
+            }
+
+            return pairs;
         }
     }
 }
