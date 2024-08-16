@@ -42,5 +42,20 @@ namespace CubeNetsTests
             Assert.DoesNotContain(0b10000, starEdges);
             Assert.Equal(3, starEdges.Length);
         }
+
+        [Fact]
+        public void TreeFromFirschingData()
+        {
+            List<CubeNet> FirschingNets = CubeNet.GetTesseractNets();
+            Tree tree = FirschingNets[1].ToTree();
+            int[] edges = tree.EdgeBitMasks;
+            Assert.Contains(0b00000011, edges);
+            Assert.Contains(0b00000110, edges);
+            Assert.Contains(0b00001100, edges);
+            Assert.Contains(0b00010001, edges);
+            Assert.Contains(0b00110000, edges);
+            Assert.Contains(0b01100000, edges);
+            Assert.Contains(0b10000001, edges);
+        }
     }
 }
