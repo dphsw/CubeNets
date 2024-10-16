@@ -58,6 +58,8 @@ namespace CubeNetsLibrary
 
             for (int fa = 0; fa < numAngles; fa++) TryIterateCoord(0, fa);
 
+            return bestLayout;
+
             void TryIterateCoord(int CoordFrom, int Direction)
             {
                 int CoordTo = CoordFrom + 1;
@@ -91,9 +93,68 @@ namespace CubeNetsLibrary
 
             float GetLayoutScore()
             {
-                // Get layout of current set of coords
-                // NYI
-                return 1f;
+                float minX, maxX;
+                float minY, maxY;
+                minX = minY = float.MaxValue;
+                maxX = maxY = float.MinValue;
+
+                int a, b;
+                float ax, ay, bx, by;
+                float dx, dy;
+                float score = 0f;
+
+                for (a = 0; a < numNodes; a++) {
+                    ax = coords[2 * a + 0];
+                    ay = coords[2 * a + 1];
+
+                    minX = Math.Min(minX, ax);
+                    maxX = Math.Max(maxX, ax);
+                    minY = Math.Min(minY, ay);
+                    maxY = Math.Max(maxY, ay);
+
+                    for (b = a + 1; b < numNodes; b++) {
+                        bx = coords[2 * b + 0];
+                        by = coords[2 * b + 1];
+
+                        dx = ax - bx;
+                        dy = ay - by;
+                        score += dx * dx + dy * dy;
+                    }
+
+                }
+
+                score += 1000f * (maxX - minX);
+
+                if (score > bestLayoutScore) {
+                    // If this is our best layout, let's centre it now
+                    // while we have the min and max x and y coords
+                    float xAdd = -0.5f * (minX + maxX);
+                    float yAdd = -0.5f * (minY + maxY);
+
+                    float height, totalheight = 0f;
+                    float leftGrav, totalLeftGrav = 0f;
+                    
+                    for (a = 0; a < numNodes; a++) {
+                        height = coords[2 * a + 1] - minY;
+                        totalheight += height;
+
+                        leftGrav = coords[2 * a + 0] - minX;
+                        totalLeftGrav += leftGrav;
+
+                        coords[2 * a + 0] += xAdd;
+                        coords[2 * a + 1] += yAdd;
+                    }
+
+                    // Subtract from score since if more was added on after the test above,
+                    // we might get false negatives.  (False positives aren't a problem
+                    // as long as we don't leave the score artificially high, hence return 0
+                    // if the test doesn't pass.)
+                    score -= totalheight;
+                    score -= 0.06125f * totalLeftGrav;
+                    return score;
+                }
+
+                return 0;
             }
         }
     }
