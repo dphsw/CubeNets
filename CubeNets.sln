@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubeNetsLibrary", "CubeNets
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubeNetsTests", "CubeNetsTests\CubeNetsTests.csproj", "{1C48EA67-5BEC-43E7-AE16-3667FCB1EF93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesseractGraphs", "TesseractGraphs\TesseractGraphs.csproj", "{BD0E4698-1598-498D-B614-14EF1847DB19}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1C48EA67-5BEC-43E7-AE16-3667FCB1EF93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C48EA67-5BEC-43E7-AE16-3667FCB1EF93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C48EA67-5BEC-43E7-AE16-3667FCB1EF93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD0E4698-1598-498D-B614-14EF1847DB19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD0E4698-1598-498D-B614-14EF1847DB19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD0E4698-1598-498D-B614-14EF1847DB19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD0E4698-1598-498D-B614-14EF1847DB19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
