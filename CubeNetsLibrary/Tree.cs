@@ -56,13 +56,14 @@ namespace CubeNetsLibrary
                 coordDiffs[2 * a + 1] = (float)Math.Sin(angle);
             }
 
-            for (int fa = 0; fa < numAngles; fa++) TryIterateCoord(0, fa);
+            for (int fa = 0; fa < numAngles; fa++) TryIterateCoord(1, fa);
 
             return bestLayout;
 
-            void TryIterateCoord(int CoordFrom, int Direction)
+            void TryIterateCoord(int Coord, int Direction)
             {
-                int CoordTo = CoordFrom + 1;
+                int CoordTo = Coord;
+                int CoordFrom = parentNodes[Coord];
 
                 coords[2 * CoordTo + 0] = coords[2 * CoordFrom + 0] + coordDiffs[2 * Direction + 0];
                 coords[2 * CoordTo + 1] = coords[2 * CoordFrom + 1] + coordDiffs[2 * Direction + 1];
@@ -75,9 +76,9 @@ namespace CubeNetsLibrary
                     if (dist2 < tooClose2) return;
                 }
 
-                if (CoordTo < numNodes - 1)
+                if (Coord < numNodes - 1)
                 {
-                    for (int a = 0; a < numAngles; a++) TryIterateCoord(CoordTo, a);
+                    for (int a = 0; a < numAngles; a++) TryIterateCoord(Coord + 1, a);
                 } 
                 else
                 {
